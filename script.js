@@ -18,11 +18,23 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Cube
+// Center Cube
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshNormalMaterial();
-const cube = new THREE.Mesh(geometry, material);
+const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 scene.add(cube);
+
+// Audio bars
+const bars=[];
+const barCount = 16;
+for (let i = 0; i < barCount; i++) {
+  const barGeometry = new THREE.BoxGeometry(0.25, 1, 0.25);
+  const barMaterial = new THREE.MeshNormalMaterial();
+  const bar=new THREE.Mesh(barGeometry, barMaterial);
+  bar.position.x = (i-barCount/2) * 0.4;
+  bar.position.y = -2;
+  bars.push(bar);
+  scene.add(bar);
 
 // Audio setup
 const audio = new Audio("song.mp3");
@@ -52,17 +64,20 @@ function animate() {
   analyser.getByteFrequencyData(dataArray);
 
   let avg = dataArray.reduce((a, b) => a + b, 0) / bufferLength;
-
   let scale = 1 + avg / 100;
 
-  cube.scale.set(scale, scale, scale);
+cube.scale.set(scale, scale, scale);
+cube.rotation.x += 0.01;
+cube.rotation.y += 0.01;
 
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
-
+// Make each bar react to a different frequency value
+for (let i = 0; i < bars.length; i++){
+  let value = dataArray[i]/50;
+  bars[i].scale.y = Math.max(0.2, value);
+  bars[i].position.y=-2+ bars[i].scale.y/2;
+}
   renderer.render(scene, camera);
 }
-
 animate();
 
 // Resize handling
