@@ -1,0 +1,23 @@
+{
+  "name": "cosc471-audio-visualizer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+  "start": "serve . & open http://localhost:3000"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LaraMoussa1/Cosc471-Audio-Visualizer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LaraMoussa1/Cosc471-Audio-Visualizer/issues"
+  },
+  "homepage": "https://github.com/LaraMoussa1/Cosc471-Audio-Visualizer#readme",
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}
